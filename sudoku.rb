@@ -3,6 +3,9 @@
 class Sudoku 
   attr_reader :sudoku_string
   attr_reader :sudoku_original
+  attr_reader :aux
+
+  private
 
   def initialize(sudoku_string)
     # x = sudoku_string.scan(/./)
@@ -10,30 +13,38 @@ class Sudoku
     @sudoku_original = sudoku_string.scan(/./)
   end#mtd
 
-  def organiza_board
-    a = Array.new(9) { @sudoku_original.pop(9) }
-    b = []
-    i = -1
-    # j = -1
-    until i == -9
-      # until j == -9
-       b << a[i]
-       i -= 1
-    end
-    b
 
+  def board_int
+    @aux = Array.new(9) { @sudoku_original.pop(9) }
+    b = []
+    @aux.each do |e|
+      e.each do |string|
+        b << string.to_i
+      end
+    end
+     a = Array.new(9) { b.pop(9) }
   end#mtd
 
   public
 
   def board
-    a = organiza_board
-    a.each do |e|
-        printf "#{e}"
-        printf "\n"
+    a = board_int
+    count = 0
+    a.each do |arreglo|
+      if count % 3 == 0 
+        p "--------+---------+--------"
+      end#if      
+      arreglo.each_with_index do |elemento, index|
+          if ( index % 3 == 0 ) && ( index != 0)
+            printf "|"
+          end
+          printf " #{elemento} "
+        end#s each
+      printf "\n"
+      count += 1
     end#f each
+    p "--------+---------+--------"
     printf "\n"
-
   end#mtd
 
 end#class
